@@ -1,8 +1,11 @@
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { IoPerson } from 'react-icons/io5';
-import css from './Contact.module.css'
+import css from './Contact.module.css';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice';
 
-const Contact = ({ contact: { id, name, number }, onDelete }) => {
+const Contact = ({ contact: { id, name, number } }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <div className={css['contact-wrapper']}>
@@ -15,7 +18,7 @@ const Contact = ({ contact: { id, name, number }, onDelete }) => {
           <p>{number}</p>
         </div>
       </div>
-      <button type="button" onClick={() => onDelete(id)}>
+      <button type="button" onClick={() => dispatch(deleteContact(id))}>
         Delete
       </button>
     </>

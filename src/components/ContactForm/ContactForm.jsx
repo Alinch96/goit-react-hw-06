@@ -2,6 +2,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useId } from 'react';
 import css from './ContactForm.module.css';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
 
 const initialValues = {
   name: '',
@@ -16,20 +18,17 @@ const FeedbackSchema = Yup.object().shape({
     .max(50, 'Too Long!')
     .required('Required!'),
   number: Yup.string()
-    .matches(
-      phoneRegExp,
-      "The phone format 'xxx-xx-xx' is required"
-    )
+    .matches(phoneRegExp, "The phone format 'xxx-xx-xx' is required")
     .required('Required!'),
 });
 
-const ContactForm = ({ onAdd }) => {
+const ContactForm = () => {
   const nameFieldId = useId();
   const telFieldId = useId();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
-    onAdd(values);
+    dispatch(addContact(values));
     actions.resetForm();
   };
 
